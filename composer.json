@@ -2,6 +2,7 @@
     "name": "codegaf/user",
     "type": "laravel-module",
     "description": "Laravel User Module Provided by nWidart",
+    "version": "dev-master",
     "authors": [
         {
             "name": "Isaac Campos",

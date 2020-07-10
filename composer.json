@@ -1,0 +1,26 @@
+{
+    "name": "codegaf/user",
+    "type": "laravel-module",
+    "description": "Laravel User Module Provided by nWidart",
+    "authors": [
+        {
+            "name": "Isaac Campos",
+            "email": "icampos@10code.es"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\User\\Providers\\UserServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\User\\": ""
+        }
+    }
+}

@@ -1,9 +1,7 @@
-@extends('user::layouts.master')
+@extends('layouts.contentLayoutMaster')
+
+@section('title', __('pages.users-list'))
 
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('user.name') !!}
-    </p>
+    @include('includes.notifications')
 @endsection

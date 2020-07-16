@@ -11,4 +11,9 @@
 |
 */
 
+Route::prefix('user', function() {
+
+});
+Route::resource('user', 'UserController');
+
 

@@ -5,16 +5,24 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\User\Http\Requests\UserStoreRequest;
+use Modules\User\Services\UserService;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('user::index');
+        return $this->userService->index();
     }
 
     /**
@@ -23,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return $this->userService->create();
     }
 
     /**
@@ -31,9 +39,9 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        return $this->userService->store($request->all());
     }
 
     /**
@@ -75,5 +83,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function list() {
+        return $this->userService->list();
     }
 }

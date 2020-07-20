@@ -11,9 +11,8 @@
 |
 */
 
-Route::prefix('user', function() {
-
+Route::middleware('auth')->group(function() {
+    Route::resource('user', 'UserController');
 });
-Route::resource('user', 'UserController');
 
 

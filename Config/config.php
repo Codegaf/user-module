@@ -27,29 +27,57 @@ return [
 
     'front' => [
         'validation' => [
-            'rules' => [
-                'email' => [
-                    'required' => true,
-                    'email' => true
+            'create' => [
+                'rules' => [
+                    'email' => [
+                        'required' => true,
+                        'email' => true
+                    ],
+                    'name' => [
+                        'required' => true,
+                        'maxlength' => 191
+                    ],
+                    'password' => [
+                        'required' => true,
+                        'minlength' => 8,
+                        'pwcheck' => true
+                    ],
+                    'password_confirmation' => [
+                        'equalTo' => '#password'
+                    ]
                 ],
-                'name' => [
-                    'required' => true,
-                    'maxlength' => 191
-                ],
-                'password' => [
-                    'required' => true,
-                    'minlength' => 8,
-                    'pwcheck' => true
-                ],
-                'password_confirmation' => [
-                    'equalTo' => '#password'
+                'messages' => [
+                    'password' => [
+
+                    ]
                 ]
             ],
-            'messages' => [
-                'password' => [
+            'edit' => [
+                'rules' => [
+                    'email' => [
+                        'required' => true,
+                        'email' => true
+                    ],
+                    'name' => [
+                        'required' => true,
+                        'maxlength' => 191
+                    ],
+                    'password' => [
+                        'required' => false,
+                        'minlength' => 8,
+                        'pwcheck' => false
+                    ],
+                    'password_confirmation' => [
+                        'equalTo' => '#password'
+                    ]
+                ],
+                'messages' => [
+                    'password' => [
 
+                    ]
                 ]
             ]
+
 
         ]
     ]

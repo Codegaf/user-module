@@ -5,8 +5,12 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\View\View;
+use Modules\User\DataTables\UsersDataTable;
 use Modules\User\Http\Requests\UserStoreRequest;
+use Modules\User\Http\Requests\UserUpdateRequest;
 use Modules\User\Services\UserService;
+use Modules\User\Entities\User;
 
 class UserController extends Controller
 {
@@ -18,16 +22,17 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @return Response
+     * @param UsersDataTable $usersDataTable
+     * @return View
      */
-    public function index()
+    public function index(UsersDataTable $usersDataTable)
     {
-        return $this->userService->index();
+        return $this->userService->index($usersDataTable);
     }
 
     /**
      * Show the form for creating a new resource.
-     * @return Response
+     * @return View
      */
     public function create()
     {
@@ -36,7 +41,7 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param Request $request
+     * @param UserStoreRequest $request
      * @return Response
      */
     public function store(UserStoreRequest $request)
@@ -46,33 +51,33 @@ class UserController extends Controller
 
     /**
      * Show the specified resource.
-     * @param int $id
-     * @return Response
+     * @param User $user
+     * @return View
      */
-    public function show($id)
+    public function show($user)
     {
         return view('user::show');
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
+     * @param User $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        return view('user::edit');
+        return $this->userService->edit($user);
     }
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Response
+     * @param UserUpdateRequest $request
+     * @param User $user
+     * @return View
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        return $this->userService->update($request->all(), $user);
     }
 
     /**

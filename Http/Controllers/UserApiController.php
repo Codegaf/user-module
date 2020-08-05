@@ -22,7 +22,7 @@ class UserApiController extends Controller
      * @OA\Post(
      *      path="/api/user",
      *      operationId="store",
-     *      tags={"Users"},
+     *      tags={"User"},
      *      summary="Crea un usuario nuevo.",
      *      description="Crea un usuario nuevo.",
      *      @OA\RequestBody(
@@ -47,7 +47,7 @@ class UserApiController extends Controller
      *          required=true,
      *          in="query",
      *          @OA\Schema(
-     *              type="email"
+     *              type="string"
      *          )
      *      ),
      *
@@ -74,7 +74,19 @@ class UserApiController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Operación realizada con éxito"
+     *          description="Operación realizada con éxito",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="boolean"),
+     *              @OA\Property(property="message", type="string"),
+     *              @OA\Property(
+     *                  property="validationMessages",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
+     *              ),
+     *          )
      *      ),
      *
      *      @OA\Response(
@@ -116,13 +128,16 @@ class UserApiController extends Controller
      *              ),
      *          )
      *      ),
+     *      security={
+     *          {"bearerAuth": {}}
+     *      }
      * )
      *
      * Guarda un nuevo usuario
      */
     public function store(UserStoreRequest $request)
     {
-        $this->userService->store($request->all());
+        return $this->userService->store($request->all());
     }
 
     /**
@@ -149,7 +164,7 @@ class UserApiController extends Controller
      * @OA\Put(
      *      path="/api/user/{id}",
      *      operationId="update",
-     *      tags={"Users"},
+     *      tags={"User"},
      *      summary="Actualiza un usuario existente.",
      *      description="Actualiza un usuario existente.",
      *      @OA\RequestBody(
@@ -184,7 +199,7 @@ class UserApiController extends Controller
      *          required=true,
      *          in="query",
      *          @OA\Schema(
-     *              type="email"
+     *              type="string"
      *          )
      *      ),
      *
@@ -253,6 +268,9 @@ class UserApiController extends Controller
      *              ),
      *          )
      *      ),
+     *      security={
+     *          {"bearerAuth": {}}
+     *      }
      * )
      *
      * Actualiza un usuario existente

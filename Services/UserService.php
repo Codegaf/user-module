@@ -2,6 +2,7 @@
 
 namespace Modules\User\Services;
 
+use Illuminate\Support\Facades\Hash;
 use Modules\User\DataTables\UsersDataTable;
 use Modules\User\Entities\User;
 
@@ -29,16 +30,29 @@ class UserService {
 
     public function store(array $data) {
 
+        $data['password'] = Hash::make($data['password']);
+
         User::create($data);
 
-        return response()->ok('user.index');
+        if (request()->wantsJson()) {
+            return response()->okJson();
+        }
+
+        return response()->okView('user.index');
     }
 
     public function update(array $data, User $user) {
 
-        $user->fill($data)->save();
+        if (array_key_exists('password', $data) && $data['password']) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        else {
+            unset($data['password']);
+        }
 
-        return response()->ok('user.index');
+        $user->fill($data)->update();
+
+        return response()->okView('user.index');
     }
 
     public function edit(User $user) {
@@ -49,5 +63,11 @@ class UserService {
         ];
 
         return view('user::edit', compact('user', 'breadcrumbs'));
+    }
+
+    public function destroy(User $user) {
+        $user->delete();
+
+        return response()->okJson();
     }
 }

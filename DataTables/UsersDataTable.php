@@ -2,6 +2,7 @@
 
 namespace Modules\User\DataTables;
 
+use App\Traits\FiltersDatatable;
 use Modules\User\Entities\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -9,6 +10,9 @@ use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
 {
+
+    use FiltersDatatable;
+
     /**
      * Build DataTable class.
      *
@@ -19,6 +23,9 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->filter(function($query) {
+                $this->filterColumns($query, 'complete');
+            })
             ->addColumn('action', function ($query) {
                 return '<div class="btn-group dropdown mr-1 mb-1">
                 <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -28,7 +35,7 @@ class UsersDataTable extends DataTable
                 <div class="dropdown-menu dropdown-menu-right">
                   <a class="dropdown-item" href="'.route('user.edit', ['user' => $query->id]).'">'.__("global.edit").'</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Eliminar</a>
+                  <a class="dropdown-item delete-user" href="#" data-href="'.route('user.destroy', ['user' => $query->id]).'">'.__('global.delete').'</a>
                 </div>
               </div>';
             });
@@ -58,9 +65,15 @@ class UsersDataTable extends DataTable
                     'url' => asset('/vendor/datatables/lang/'.app()->getLocale().'.json'),
                 ],
             ])
+            ->postAjax([
+                'url' => route('user.index'),
+                'data' => 'function(d) { 
+                    d.email = $("#email").val();
+                    d.name = $("#name").val();
+                }'
+            ])
             ->setTableId('users-table')
             ->columns($this->getColumns())
-            ->minifiedAjax()
             ->dom('B <"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>> rt <"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>')
             ->orderBy(1, 'asc')
             ->buttons(

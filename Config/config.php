@@ -80,5 +80,20 @@ return [
 
 
         ]
+    ],
+
+    'filterColumns' => [
+        'name' => [
+            'operator' => 'like',
+            'label' => 'forms.name',
+            'type' => 'text',
+            'col' => 'col-12 col-lg-6'
+        ],
+        'email' => [
+            'operator' => 'like',
+            'label' => 'forms.email',
+            'type' => 'email',
+            'col' => 'col-12 col-lg-6'
+        ]
     ]
 ];

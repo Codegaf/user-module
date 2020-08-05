@@ -2,15 +2,16 @@
 
 namespace Modules\User\Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Entities\User;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserCrudTest extends TestCase
 {
-    use RefreshDatabase;
+    use WithoutMiddleware, WithFaker, DatabaseMigrations;
 
     protected $user;
 

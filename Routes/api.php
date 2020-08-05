@@ -12,5 +12,5 @@
 */
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::resource('user', 'UserApiController', ['as' => 'api']);
+    Route::resource('user', 'UserApiController');
 });

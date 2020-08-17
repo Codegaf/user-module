@@ -135,29 +135,15 @@ class UserApiController extends Controller
      *
      * Guarda un nuevo usuario
      */
+    /**
+     *
+     * @param UserStoreRequest $request
+
+     * @return Response
+     */
     public function store(UserStoreRequest $request)
     {
         return $this->userService->store($request->all());
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('user::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('user::edit');
     }
 
     /**
@@ -275,18 +261,88 @@ class UserApiController extends Controller
      *
      * Actualiza un usuario existente
      */
+    /**
+     *
+     * @param UserUpdateRequest $request
+     * @param User $user
+     * @return Response
+     */
     public function update(UserUpdateRequest $request, User $user) {
         return $this->userService->update($request->all(), $user);
 
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     * @param int $id
+     * @OA\Delete(
+     *      path="/api/user/{id}",
+     *      operationId="destroy",
+     *      tags={"User"},
+     *      summary="Elimina un usuario.",
+     *      description="Elimina un usuario.",
+     *      @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json"
+     *         )
+     *      ),
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Id del usuario",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Operación realizada con éxito",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="boolean"),
+     *              @OA\Property(property="message", type="string"),
+     *              @OA\Property(
+     *                  property="validationMessages",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
+     *              ),
+     *          )
+     *      ),
+     *
+     *
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error en el servidor",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="boolean", example=false),
+     *              @OA\Property(property="message", type="string"),
+     *              @OA\Property(
+     *                  property="validationMessages",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="array",
+     *                      @OA\Items()
+     *                  ),
+     *              ),
+     *          )
+     *      ),
+     *      security={
+     *          {"bearerAuth": {}}
+     *      }
+     * )
+     *
+     * Elimina un usuario
+     */
+    /**
+     *
+     * @param User $user
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(User $user) {
+        return $this->userService->destroy($user);
     }
 }
